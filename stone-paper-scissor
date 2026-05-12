@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stone Paper Scissor Game</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #141e30, #243b55);
+        }
+
+        .game-container {
+            width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f2f2f2;
+            border-radius: 12px;
+        }
+
+        .score-box h2 {
+            font-size: 18px;
+            color: #444;
+        }
+
+        .score-box p {
+            font-size: 28px;
+            margin-top: 8px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 90px;
+            height: 90px;
+            border: none;
+            border-radius: 15px;
+            font-size: 40px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #ececec;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background: #dcdcdc;
+        }
+
+        .result {
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #222;
+            min-height: 30px;
+        }
+
+        .moves {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .reset-btn {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            background: #243b55;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #141e30;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="game-container">
+
+        <h1>Stone Paper Scissor</h1>
+
+        <div class="score-board">
+
+            <div class="score-box">
+                <h2>You</h2>
+                <p id="userScore">0</p>
+            </div>
+
+            <div class="score-box">
+                <h2>Computer</h2>
+                <p id="computerScore">0</p>
+            </div>
+
+        </div>
+
+        <div class="choices">
+
+            <button class="btn" id="stone">✊</button>
+            <button class="btn" id="paper">✋</button>
+            <button class="btn" id="scissors">✌️</button>
+
+        </div>
+
+        <div class="result">
+            Choose Your Move
+        </div>
+
+        <div class="moves">
+            You: - <br>
+            Computer: -
+        </div>
+
+        <button class="reset-btn">
+            Reset Game
+        </button>
+
+    </div>
+
+</body>
+
+</html>
+<script>
+    let btn = document.querySelectorAll(".btn");
+    const userscoretext = document.getElementById('userScore');
+    const computerscoretext = document.getElementById('computerScore');
+    let userscore = 0;
+    let computerscore = 0;
+    const result = document.querySelector('.result');
+    // result.textContent=`You chose ${userchoice} and computer chose ${computerchoice}`;
+    btn.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            let userchoice = btn.id;
+            // console.log(userchoice);
+            const choices = ['stone', 'paper', 'scissors'];
+            const randomnumber = Math.floor(Math.random() * 3);
+            // console.log(randomnumber);
+            const computerchoice = choices[randomnumber];
+            // console.log(computerchoice);
+            //    console.log('user choice is '+ userchoice);
+            //    console.log('computer choice is '+ computerchoice);
+            if (userchoice === computerchoice) {
+                result.innerText = "Draw";
+            }
+            else if (userchoice === 'stone' && computerchoice === 'scissors') {
+                result.innerText = "You Win!";
+                userscore++;
+                userscoretext.innerText = userscore;
+            }
+            else if (userchoice === 'paper' && computerchoice === 'stone') {
+                result.innerText = "You Win!";
+                userscore++;
+                userscoretext.innerText = userscore;
+            }
+            else if (userchoice === 'scissors' && computerchoice === 'paper') {
+                result.innerText = "You Win!";
+                userscore++;
+                userscoretext.innerText = userscore;
+            }
+            else {
+                result.innerText = "Computer Wins!";
+                computerscore++;
+                computerscoretext.innerText = computerscore;
+            }
+            //  result.textContent=`You chose ${userchoice} and computer chose ${computerchoice}`;
+            const moves = document.querySelector('.moves');
+            moves.innerHTML=`you: ${userchoice} <br> computer: ${computerchoice}`;
+
+            const restbtn = document.querySelector('.reset-btn');
+
+            restbtn.addEventListener('click',()=>{
+                userscore=0;
+                computerscore=0;
+
+                userscoretext.innerText = userscore;
+                computerscoretext.innerText = computerscore;
+                result.innerText = "Choose Your Move";
+                moves.innerHTML=`you: - <br> computer: -`;
+                
+            })
+            
+
+
+
+        })
+    })
+</script>
